@@ -100,7 +100,7 @@ func resourceFmcStaticIPv4Route() *schema.Resource {
 			"selected_networks": {
 				Type:     schema.TypeList,
 				Required: true,
-				MaxItems: 1,
+				MaxItems: 100,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": {
@@ -125,7 +125,7 @@ func resourceFmcStaticIPv4Route() *schema.Resource {
 			"gateway": {
 				Type:     schema.TypeList,
 				Required: true,
-				MaxItems: 1,
+				MaxItems: 100,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"object": {
@@ -189,18 +189,21 @@ func resourceFmcStaticIPv4RouteCreate(ctx context.Context, d *schema.ResourceDat
 	dynamicObjects2 := []*[]ObjectItem{
 		&selectedNetworks,
 	}
+
 	for i, objType := range []string{"selected_networks"} {
 		if inputEntries, ok := d.GetOk(objType); ok {
-			entry := inputEntries.([]interface{})[0].(map[string]interface{})
-			*dynamicObjects2[i] = []ObjectItem{
-				{
-					ID:   entry["id"].(string),
-					Type: entry["type"].(string),
-					Name: entry["name"].(string),
-				},
+			entries := inputEntries.([]interface{})
+			for _, entry := range entries {
+				temp := entry.(map[string]interface{})
+				*dynamicObjects2[i] = append(*dynamicObjects2[i], ObjectItem{
+					ID:   temp["id"].(string),
+					Type: temp["type"].(string),
+					Name: temp["name"].(string),
+				})
 			}
 		}
 	}
+
 	var routeTracking *ObjectItem
 	dynamicObjects3 := []**ObjectItem{
 		&routeTracking,
@@ -342,13 +345,14 @@ func resourceFmcStaticIPv4RouteUpdate(ctx context.Context, d *schema.ResourceDat
 		}
 		for i, objType := range []string{"selected_networks"} {
 			if inputEntries, ok := d.GetOk(objType); ok {
-				entry := inputEntries.([]interface{})[0].(map[string]interface{})
-				*dynamicObjects2[i] = []ObjectItem{
-					{
-						ID:   entry["id"].(string),
-						Type: entry["type"].(string),
-						Name: entry["name"].(string),
-					},
+				entries := inputEntries.([]interface{})
+				for _, entry := range entries {
+					temp := entry.(map[string]interface{})
+					*dynamicObjects2[i] = append(*dynamicObjects2[i], ObjectItem{
+						ID:   temp["id"].(string),
+						Type: temp["type"].(string),
+						Name: temp["name"].(string),
+					})
 				}
 			}
 		}
