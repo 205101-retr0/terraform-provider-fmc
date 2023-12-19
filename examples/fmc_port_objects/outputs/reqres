@@ -1,0 +1,5 @@
+[DEBUG REQ] 2023/10/26 09:38:05 &{GET https://ec2-15-168-43-18.ap-northeast-3.compute.amazonaws.com/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/protocolportobjects/1834e712-38bb-11e2-86aa-62f0c593a59a HTTP/1.1 1 1 map[] <nil> <nil> 0 [] false ec2-15-168-43-18.ap-northeast-3.compute.amazonaws.com map[] map[] <nil> map[]   <nil> <nil> <nil> 0x1400058d260} request
+[DEBUG RES] 2023/10/26 09:38:06 &{ProtocolPortObject 53 TCP false   DNS_over_TCP 1834e712-38bb-11e2-86aa-62f0c593a59a} response
+
+================================================================================================================
+[DEBUG REQ] 2023/10/26 09:38:06 &{GET https://ec2-15-168-43-18.ap-northeast-3.compute.amazonaws.com/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/protocolportobjects/0E4CBFB4-81E8-0ed3-0000-004294976387 HTTP/1.1 1 1 map[] <nil> <nil> 0 [] false ec2-15-168-43-18.ap-northeast-3.compute.amazonaws.com map[] map[] <nil> map[]   <nil> <nil> <nil> 0x140001d73b0} request

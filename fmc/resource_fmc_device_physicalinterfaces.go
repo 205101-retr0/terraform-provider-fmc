@@ -3,6 +3,7 @@ package fmc
 import (
 	"context"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -123,6 +124,11 @@ func resourcePhyInterface() *schema.Resource {
 				Optional:    true,
 				Description: "IPv6 EnforceEUI64",
 			},
+			"management_only": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: "The management only flag",
+			},
 		},
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -164,7 +170,7 @@ func resourcePhyInterfaceRead(ctx context.Context, d *schema.ResourceData, m int
 	if err := d.Set("name", physicalInterfaces.Name); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "unable to read security zone",
+			Summary:  "unable to read name",
 			Detail:   err.Error(),
 		})
 		return diags
@@ -173,7 +179,7 @@ func resourcePhyInterfaceRead(ctx context.Context, d *schema.ResourceData, m int
 	if err := d.Set("if_name", physicalInterfaces.Ifname); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "unable to read security zone",
+			Summary:  "unable to read logical name",
 			Detail:   err.Error(),
 		})
 		return diags
@@ -182,7 +188,7 @@ func resourcePhyInterfaceRead(ctx context.Context, d *schema.ResourceData, m int
 	if err := d.Set("description", physicalInterfaces.Description); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "unable to read security zone",
+			Summary:  "unable to read Description",
 			Detail:   err.Error(),
 		})
 		return diags
@@ -191,7 +197,16 @@ func resourcePhyInterfaceRead(ctx context.Context, d *schema.ResourceData, m int
 	if err := d.Set("mode", physicalInterfaces.Mode); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "unable to read security zone",
+			Summary:  "unable to read mode",
+			Detail:   err.Error(),
+		})
+		return diags
+	}
+
+	if err := d.Set("management_only", physicalInterfaces.ManagementOnly); err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "unable to read management_only setting",
 			Detail:   err.Error(),
 		})
 		return diags
@@ -200,7 +215,7 @@ func resourcePhyInterfaceRead(ctx context.Context, d *schema.ResourceData, m int
 	if err := d.Set("mtu", physicalInterfaces.MTU); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "unable to read security zone",
+			Summary:  "unable to read mtu value",
 			Detail:   err.Error(),
 		})
 		return diags
@@ -243,10 +258,11 @@ func resourcePhyInterfaceUpdate(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("FPU: DeviceId=%s, PhysicalInterfaceId=%s, IFName=%s Name=%s, Description=%s, security_zone_id=%s", deviceId, physicalInterfaceId, iFName, name, description, securityZoneId)
 
 		ipv4StaticAddress := d.Get("ipv4_static_address").(string)
-		ipv4StaticNetmask := d.Get("ipv4_static_netmask").(string)
+		ipv4StaticNetmask := d.Get("ipv4_static_netmask").(int)
 		ipv4DhcpEnabled := d.Get("ipv4_dhcp_enabled").(bool)
 		enabled := d.Get("enabled").(bool)
 		ipv4DhcpRouteMetric := d.Get("ipv4_dhcp_route_metric").(int)
+		managementOnly := d.Get("management_only").(bool)
 
 		// log.Printf("ipv4_static_address=%s, ipv4_static_netmask=%s, ipv4_dhcp_enabled=%s, ipv4_dhcp_route_metric=%s", ipv4StaticAddress, ipv4StaticNetmask, ipv4DhcpEnabled, ipv4DhcpRouteMetric)
 
@@ -262,7 +278,7 @@ func resourcePhyInterfaceUpdate(ctx context.Context, d *schema.ResourceData, m i
 
 		var IPv4Static = IPv4Static{
 			Address: ipv4StaticAddress,
-			Netmask: ipv4StaticNetmask,
+			Netmask: strconv.Itoa(ipv4StaticNetmask),
 		}
 		var IPv4DHCP = IPv4DHCP{
 			Enable:      ipv4DhcpEnabled,
@@ -293,16 +309,17 @@ func resourcePhyInterfaceUpdate(ctx context.Context, d *schema.ResourceData, m i
 		// log.Printf("IPv6Address=%s", IPv6Add)
 
 		res, err := c.UpdateFmcPhysicalInterface(ctx, deviceId, physicalInterfaceId, &PhysicalInterfaceRequest{
-			ID:           physicalInterfaceId,
-			Ifname:       iFName,
-			Enabled:      enabled,
-			Mode:         mode,
-			Name:         name,
-			Description:  description,
-			MTU:          mtu,
-			SecurityZone: PhysicalInterfaceSecurityZone,
-			IPv4:         IPv4,
-			IPv6:         IPv6,
+			ID:             physicalInterfaceId,
+			Ifname:         iFName,
+			Enabled:        enabled,
+			Mode:           mode,
+			Name:           name,
+			Description:    description,
+			MTU:            mtu,
+			SecurityZone:   PhysicalInterfaceSecurityZone,
+			IPv4:           IPv4,
+			IPv6:           IPv6,
+			ManagementOnly: managementOnly,
 		})
 
 		if err != nil {

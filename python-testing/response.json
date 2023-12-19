@@ -1,0 +1,53 @@
+{
+  "name": "test-1",
+  "configureSSL": true,
+  "accessInterfaceSettings": {
+      "sslIdCertificate": {
+          "name": "test-self-signed",
+          "id": "6045BD73-39FB-0ed3-0000-004294969295",
+          "type": "CertEnrollment"
+      },
+      "bypassACPolicyForDecryptTraffic": true,
+      "name": "access-1",
+      "interfaceSettings": [
+          {
+              "enableSSL": true,
+              "configureInterfaceIDCertificate": true,
+              "idCertificate": {
+                  "name": "test-self-signed",
+                  "id": "6045BD73-39FB-0ed3-0000-004294969295",
+                  "type": "CertEnrollment"
+              },
+              "name": "GigabitEthernet0/1",
+              "enableDTLS": true,
+              "accessInterface": {
+                  "name": "outsideVPN",
+                  "id": "7b94545e-6de4-11ee-b329-b7c672059c33"
+              }
+          }
+      ],
+      "allowConnectionProfileSelection": true,
+      "dtlsPort": 8081,
+      "webPort": 8080
+  },
+  "anyConnectClientImages": [
+      {
+          "anyconnectImage": {
+              "name": "anyconnect-test-1",
+              "id": "6045BD73-39FB-0ed3-0000-004294971261",
+              "type": "AnyConnectPackage"
+          },
+          "operatingSystem": "WINDOWS"
+      }
+  ]
+}
+
+// IPv4AddressPool
+{
+    "type": "IPv4AddressPool",
+    "addressType": "RANGE",
+    "ipAddressRange": "10.0.4.1-10.0.4.254",
+    "mask": "255.255.255.0",
+    "overridable": true,
+    "name": "vpnpool-2"
+}

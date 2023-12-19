@@ -28,9 +28,9 @@ resource "fmc_range_objects" "shbharti-range-2" {
 }
 
 output "fmc_range_object-1" {
-  value = fmc_range_objects.shbharti-range-1.name
+  value = fmc_range_objects.shbharti-range-1
 }
 
 output "new_fmc_range_object_3" {
-  value = fmc_range_objects.shbharti-range-2.name
+  value = fmc_range_objects.shbharti-range-2
 }

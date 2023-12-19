@@ -14,16 +14,16 @@ provider "fmc" {
   fmc_insecure_skip_verify = var.fmc_insecure_skip_verify
 }
 
-data "fmc_devices" "device" {
-    name = "ftd.adyah.cisco"
-}
+# data "fmc_devices" "device" {
+#     name = "ftd.adyah.cisco"
+# }
 
-output "existing_device" {
-    value = data.fmc_devices.device
-}
+# output "existing_device" {
+#     value = data.fmc_devices.device
+# }
 
 data "fmc_access_policies" "access_policy"{
-  name="test-acp"
+  name="ACP"
 }
 
 resource "fmc_devices" "device" {

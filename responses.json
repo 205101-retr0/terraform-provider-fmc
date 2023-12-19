@@ -1,0 +1,52 @@
+{
+    "links": {
+        "self": "https://15.168.70.156/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/job/taskstatuses?offset=0&limit=25&filter=type:Registration;status:Running"
+    },
+    "items": [
+        {
+            "id": "1686677751",
+            "type": "TaskStatus",
+            "links": {
+                "self": "https://15.168.70.156/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/job/taskstatuses/1686677751"
+            }
+        }
+    ],
+    "paging": {
+        "offset": 0,
+        "limit": 25,
+        "count": 1,
+        "pages": 1
+    },
+    "devices": [
+        {
+            "id": "",
+            "type": "",
+            "name": "FTD",
+            "hostName": "172.16.0.10",
+            "regKey": "cisco",
+            "accessPolicy": {
+                "id": "02CEEEB9-ADA5-0ed3-0000-004294969444",
+                "type": ""
+            },
+            "performanceTier": "FTDv30",
+            "license_caps": [
+                "MALWARE"
+            ]
+        },
+        {
+            "id": "",
+            "type": "",
+            "name": "FTD",
+            "hostName": "172.16.0.20",
+            "regKey": "cisco",
+            "accessPolicy": {
+                "id": "02CEEEB9-ADA5-0ed3-0000-004294969444",
+                "type": ""
+            },
+            "performanceTier": "FTDv30",
+            "license_caps": [
+                "MALWARE"
+            ]
+        }
+    ]
+}

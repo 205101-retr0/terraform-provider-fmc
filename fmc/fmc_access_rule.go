@@ -147,6 +147,14 @@ type AccessRuleResponse struct {
 	Name        string                   `json:"name"`
 }
 
+type AccessRulesResponse struct {
+	Items []struct {
+		Type string `json:"type"`
+		ID   string `json:"id"`
+		Name string `json:"name"`
+	} `json:"items"`
+}
+
 // /fmc_config/v1/domain/DomainUUID/policy/accesspolicies/{containerUUID}/accessrules?bulk=true ( Bulk POST operation on access rules. )
 
 func (v *Client) CreateFmcAccessRule(ctx context.Context, acpId, section, insertBefore, insertAfter, category string, accessPolicy *AccessRule) (*AccessRuleResponse, error) {
@@ -193,6 +201,41 @@ func (v *Client) CreateFmcAccessRule(ctx context.Context, acpId, section, insert
 	Log.debug(item, "response")
 	Log.line()
 	return item, nil
+}
+
+func (v *Client) GetFmcAccessRuleByName(ctx context.Context, acp_name string, name string) (*AccessRuleResponse, error) {
+	acp, err := v.GetFmcAccessPolicyByName(ctx, acp_name)
+	if err != nil {
+		return nil, fmt.Errorf("getting access policy by name/value: %s - %s", acp.Name, err.Error())
+	}
+
+	url := fmt.Sprintf("%s/policy/accesspolicies/%s/accessrules", v.domainBaseURL, acp.ID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	Log.debug(req, "request")
+	if err != nil {
+		return nil, fmt.Errorf("getting access rules: %s - %s", url, err.Error())
+	}
+	resp := &AccessRulesResponse{}
+	err = v.DoRequest(req, resp, http.StatusOK)
+	Log.debug(resp, "response")
+	Log.line()
+	if err != nil {
+		return nil, fmt.Errorf("getting access policy by name/value: %s - %s", url, err.Error())
+	}
+	switch l := len(resp.Items); {
+	case l == 1:
+		return v.GetFmcAccessRule(ctx, acp.ID, resp.Items[0].ID)
+	case l > 1:
+		for _, item := range resp.Items {
+			if item.Name == name {
+				return v.GetFmcAccessRule(ctx, acp.ID, item.ID)
+			}
+		}
+		return nil, fmt.Errorf("duplicates found, no exact match, length of response is: %d, expected 1, please search using a unique id, name or value", l)
+	case l == 0:
+		return nil, fmt.Errorf("no access policies found, length of response is: %d, expected 1, please check your filter", l)
+	}
+	return nil, fmt.Errorf("this should not be reachable, this is a bug")
 }
 
 func (v *Client) GetFmcAccessRule(ctx context.Context, acpId string, id string) (*AccessRuleResponse, error) {

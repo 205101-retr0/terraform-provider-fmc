@@ -44,29 +44,31 @@ type PhysicalInterfaceSecurityZone struct {
 }
 
 type PhysicalInterfaceResponse struct {
-	Type         string                        `json:"type"`
-	Enabled      bool                          `json:"enabled"`
-	Ifname       string                        `json:"ifname"`
-	Description  string                        `json:"description"`
-	ID           string                        `json:"id"`
-	Name         string                        `json:"name"`
-	MTU          int64                         `json:"MTU,omitempty"`
-	Mode         string                        `json:"mode"`
-	SecurityZone PhysicalInterfaceSecurityZone `json:"securityZone"`
+	Type           string                        `json:"type"`
+	Enabled        bool                          `json:"enabled"`
+	Ifname         string                        `json:"ifname"`
+	Description    string                        `json:"description"`
+	ID             string                        `json:"id"`
+	Name           string                        `json:"name"`
+	MTU            int64                         `json:"MTU,omitempty"`
+	Mode           string                        `json:"mode"`
+	SecurityZone   PhysicalInterfaceSecurityZone `json:"securityZone"`
+	ManagementOnly bool                          `json:"managementOnly"`
 }
 
 type PhysicalInterfaceRequest struct {
-	Type         string                        `json:"type"`
-	Ifname       string                        `json:"ifname"`
-	Enabled      bool                          `json:"enabled"`
-	Description  string                        `json:"description"`
-	ID           string                        `json:"id"`
-	Name         string                        `json:"name"`
-	MTU          int                           `json:"MTU,omitempty"`
-	Mode         string                        `json:"mode"`
-	SecurityZone PhysicalInterfaceSecurityZone `json:"securityZone"`
-	IPv4         IPv4                          `json:"ipv4"`
-	IPv6         IPv6                          `json:"ipv6"`
+	Type           string                        `json:"type"`
+	Ifname         string                        `json:"ifname"`
+	Enabled        bool                          `json:"enabled"`
+	Description    string                        `json:"description"`
+	ID             string                        `json:"id"`
+	Name           string                        `json:"name"`
+	MTU            int                           `json:"MTU,omitempty"`
+	Mode           string                        `json:"mode"`
+	SecurityZone   PhysicalInterfaceSecurityZone `json:"securityZone"`
+	IPv4           IPv4                          `json:"ipv4"`
+	IPv6           IPv6                          `json:"ipv6"`
+	ManagementOnly bool                          `json:"managementOnly,omitempty"`
 }
 
 type PhysicalInterfacesResponse struct {
@@ -100,15 +102,16 @@ func (v *Client) GetFmcPhysicalInterface(ctx context.Context, deviceID string, n
 		if PhysicalInterface.Name == name {
 			Log.debug(PhysicalInterface, "response")
 			return &PhysicalInterfaceResponse{
-				ID:           PhysicalInterface.ID,
-				Name:         PhysicalInterface.Name,
-				Enabled:      PhysicalInterface.Enabled,
-				Ifname:       PhysicalInterface.Ifname,
-				Type:         PhysicalInterface.Type,
-				Description:  PhysicalInterface.Description,
-				MTU:          PhysicalInterface.MTU,
-				Mode:         PhysicalInterface.Mode,
-				SecurityZone: PhysicalInterface.SecurityZone,
+				ID:             PhysicalInterface.ID,
+				Name:           PhysicalInterface.Name,
+				Enabled:        PhysicalInterface.Enabled,
+				Ifname:         PhysicalInterface.Ifname,
+				Type:           PhysicalInterface.Type,
+				Description:    PhysicalInterface.Description,
+				MTU:            PhysicalInterface.MTU,
+				Mode:           PhysicalInterface.Mode,
+				SecurityZone:   PhysicalInterface.SecurityZone,
+				ManagementOnly: PhysicalInterface.ManagementOnly,
 			}, nil
 		}
 	}
@@ -137,15 +140,16 @@ func (v *Client) GetFmcPhysicalInterfaceByID(ctx context.Context, deviceID strin
 	if physicalInterface != nil {
 		Log.debug(physicalInterface, "response")
 		return &PhysicalInterfaceResponse{
-			ID:           physicalInterface.ID,
-			Name:         physicalInterface.Name,
-			Enabled:      physicalInterface.Enabled,
-			Ifname:       physicalInterface.Ifname,
-			Type:         physicalInterface.Type,
-			Description:  physicalInterface.Description,
-			MTU:          physicalInterface.MTU,
-			Mode:         physicalInterface.Mode,
-			SecurityZone: physicalInterface.SecurityZone,
+			ID:             physicalInterface.ID,
+			Name:           physicalInterface.Name,
+			Enabled:        physicalInterface.Enabled,
+			Ifname:         physicalInterface.Ifname,
+			Type:           physicalInterface.Type,
+			Description:    physicalInterface.Description,
+			MTU:            physicalInterface.MTU,
+			Mode:           physicalInterface.Mode,
+			SecurityZone:   physicalInterface.SecurityZone,
+			ManagementOnly: physicalInterface.ManagementOnly,
 		}, nil
 	}
 

@@ -14,45 +14,53 @@ provider "fmc" {
   fmc_insecure_skip_verify = var.fmc_insecure_skip_verify
 }
 
-
 data "fmc_devices" "device1" {
-    name = "FTD"
+    name = "FTD1"
 }
 data "fmc_network_objects" "anyipv4"{
   name = "any-ipv4"
 }
-data "fmc_network_objects" "rand"{
+resource "fmc_network_objects" "rand"{
   name = "rand-net"
-}
-data "fmc_host_objects" "igw" {
-  name = "igw"
+  value = "100.0.0.0/24"
 }
 
-resource "fmc_staticIPv4_route" "route1" {
-  device_id  = data.fmc_devices.device1.id
-  interface_name = "outside" # Such interface should be configured on the device first.
-  metric_value = 23
-  is_tunneled = false
-  selected_networks {
-      id = data.fmc_network_objects.rand.id
-      type = data.fmc_network_objects.rand.type
-      name = data.fmc_network_objects.rand.name
-  }
-  gateway {
-    object {
-      id = data.fmc_host_objects.igw.id
-      type = data.fmc_host_objects.igw.type
-      name = data.fmc_host_objects.igw.name
-    }
-  }
-  route_tracking {
-    id = "<ID OF THE RESOURCE>"
-    type = "SLAMonitor"
-    name = "<NAME OF THE RESOURCE>"
-  }
+resource "fmc_network_objects" "rand1"{
+  name = "rand-net1"
+  value = "100.10.0.0/24"
 }
+
+resource "fmc_host_objects" "igw" {
+  name = "igw"
+  value = "10.0.0.1"
+}
+
+# resource "fmc_staticIPv4_route" "route1" {
+#   device_id  = data.fmc_devices.device1.id
+#   interface_name = "outside" # Such interface should be configured on the device first.
+#   metric_value = 23
+#   is_tunneled = false
+#   selected_networks {
+#       id = data.fmc_network_objects.rand.id
+#       type = data.fmc_network_objects.rand.type
+#       name = data.fmc_network_objects.rand.name
+#   }
+#   gateway {
+#     object {
+#       id = data.fmc_host_objects.igw.id
+#       type = data.fmc_host_objects.igw.type
+#       name = data.fmc_host_objects.igw.name
+#     }
+#   }
+#   route_tracking {
+#     id = "<ID OF THE RESOURCE>"
+#     type = "SLAMonitor"
+#     name = "<NAME OF THE RESOURCE>"
+#   }
+# }
 
 resource "fmc_staticIPv4_route" "route2" {
+  depends_on = [fmc_host_objects.igw, fmc_network_objects.rand]
   device_id  = data.fmc_devices.device1.id
   interface_name = "inside"
   metric_value = 23
@@ -62,18 +70,29 @@ resource "fmc_staticIPv4_route" "route2" {
       type = data.fmc_network_objects.anyipv4.type
       name = data.fmc_network_objects.anyipv4.name
   }
+  selected_networks {
+      id = fmc_network_objects.rand.id
+      type = fmc_network_objects.rand.type
+      name = fmc_network_objects.rand.name
+  }
+
+  selected_networks {
+      id = fmc_network_objects.rand1.id
+      type = fmc_network_objects.rand1.type
+      name = fmc_network_objects.rand1.name
+  }
   gateway {
     object {
-      id = data.fmc_host_objects.igw.id
-      type = data.fmc_host_objects.igw.type
-      name = data.fmc_host_objects.igw.name
+      id = fmc_host_objects.igw.id
+      type = fmc_host_objects.igw.type
+      name = fmc_host_objects.igw.name
     }
   }
 }
 
-output "route1"{
-  value = fmc_staticIPv4_route.route1
-}
+# output "route1"{
+#   value = fmc_staticIPv4_route.route1
+# }
 output "route2"{
   value = fmc_staticIPv4_route.route2
 }

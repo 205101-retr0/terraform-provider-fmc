@@ -1,0 +1,24 @@
+[DEBUG REQ] 2023/06/01 23:13:35 &{GET https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts/0215C695-C903-0ed3-0000-055834609626 HTTP/1.1 1 1 map[] <nil> <nil> 0 [] false 3.16.105.62 map[] map[] <nil> map[]   <nil> <nil> <nil> 0x14000560d20} request
+[DEBUG RES] 2023/06/01 23:13:35 &{{https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts/0215C695-C903-0ed3-0000-055834609626 https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/networkaddresses} Host 1.1.1.2 false testing terraform change 0215C695-C903-0ed3-0000-055834609626 terraform_test_host_2 {{tester} {Global e276abec-e0f2-11e3-8169-6d9ed49b625f} V_4 NetworkAddress}} response
+
+================================================================================================================
+[DEBUG REQ] 2023/06/01 23:13:38 &{POST https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts HTTP/1.1 1 1 map[] {{"name":"terraform_test_host_1","value":"1.1.1.2","overridable":false,"description":"testing terraform change","type":"Host"}} 0x105309b70 125 [] false 3.16.105.62 map[] map[] <nil> map[]   <nil> <nil> <nil> 0x14000226120} request
+[DEBUG RES] 2023/06/01 23:13:38 &{{https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts/0215C695-C903-0ed3-0000-055834609645 https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/networkaddresses} Host 1.1.1.2 false testing terraform change 0215C695-C903-0ed3-0000-055834609645 terraform_test_host_1 {{tester} {Global e276abec-e0f2-11e3-8169-6d9ed49b625f} V_4 NetworkAddress}} response
+
+================================================================================================================
+[DEBUG REQ] 2023/06/01 23:13:38 &{GET https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts/0215C695-C903-0ed3-0000-055834609645 HTTP/1.1 1 1 map[] <nil> <nil> 0 [] false 3.16.105.62 map[] map[] <nil> map[]   <nil> <nil> <nil> 0x14000226120} request
+[DEBUG RES] &{{https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts/0215C695-C903-0ed3-0000-055834609645 https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/networkaddresses} Host 1.1.1.2 false testing terraform change 0215C695-C903-0ed3-0000-055834609645 terraform_test_host_1 {{tester} {Global e276abec-e0f2-11e3-8169-6d9ed49b625f} V_4 NetworkAddress}} response
+
+================================================================================================================
+[DEBUG REQ] 2023/06/01 23:27:09 &{GET https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts/0215C695-C903-0ed3-0000-055834609626 HTTP/1.1 1 1 map[] <nil> <nil> 0 [] false 3.16.105.62 map[] map[] <nil> map[]   <nil> <nil> <nil> 0x1400047f7a0} request
+[DEBUG REQ] 2023/06/01 23:27:09 &{GET https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts/0215C695-C903-0ed3-0000-055834609645 HTTP/1.1 1 1 map[] <nil> <nil> 0 [] false 3.16.105.62 map[] map[] <nil> map[]   <nil> <nil> <nil> 0x14000502060} request
+[DEBUG REQ] 2023/06/01 23:27:09 &{GET https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts?expanded=true&filter=nameOrValue:CUCM-Pub HTTP/1.1 1 1 map[] <nil> <nil> 0 [] false 3.16.105.62 map[] map[] <nil> map[]   <nil> <nil> <nil> 0x1400050ee40} request
+[DEBUG RES] 2023/06/01 23:27:09 &{{https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts/0215C695-C903-0ed3-0000-055834609626 https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/networkaddresses} Host 1.1.1.2 false testing terraform change 0215C695-C903-0ed3-0000-055834609626 terraform_test_host_2 {{tester} {Global e276abec-e0f2-11e3-8169-6d9ed49b625f} V_4 NetworkAddress}} response
+
+================================================================================================================
+[DEBUG RES] &{{https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/hosts/0215C695-C903-0ed3-0000-055834609645 https://3.16.105.62/api/fmc_config/v1/domain/e276abec-e0f2-11e3-8169-6d9ed49b625f/object/networkaddresses} Host 1.1.1.2 false testing terraform change 0215C695-C903-0ed3-0000-055834609645 terraform_test_host_1 {{tester} {Global e276abec-e0f2-11e3-8169-6d9ed49b625f} V_4 NetworkAddress}} response
+
+================================================================================================================
+[DEBUG RES] &{{} [] {0 0 0 0}} response
+
+================================================================================================================

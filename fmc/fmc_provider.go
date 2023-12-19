@@ -123,7 +123,7 @@ func Provider() *schema.Provider {
 			"fmc_standard_acl":               resourceFmcStandardAcl(),
 			"fmc_network_analysis_policy":    resourceFmcNetworkAnalysisPolicy(),
 			"fmc_smart_license":              resourceFmcSmartLicense(),
-			"fmc_device_subinterfaces": 	    resourceFmcSubInterface(),
+			"fmc_device_subinterfaces":       resourceFmcSubInterface(),
 			"fmc_network_objects_bulk":       resourceFmcNetworkObjectsBulk(),
 			"fmc_devices_bulk":               resourceFmcDevicesBulk(),
 			"fmc_device_cluster":             resourceFmcDeviceCluster(),
@@ -156,6 +156,7 @@ func Provider() *schema.Provider {
 			"fmc_device_subinterfaces":       dataSourceFmcSubInterfaces(),
 			"fmc_port_group_objects":         dataSourceFmcPortGroupObjects(),
 			"fmc_device_cluster":             dataSourceFmcDeviceCluster(),
+			"fmc_access_rules":               dataSourceFmcAccessRules(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
