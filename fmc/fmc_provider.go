@@ -127,7 +127,7 @@ func Provider() *schema.Provider {
 			"fmc_network_objects_bulk":       resourceFmcNetworkObjectsBulk(),
 			"fmc_devices_bulk":               resourceFmcDevicesBulk(),
 			"fmc_device_cluster":             resourceFmcDeviceCluster(),
-			"fmc_local_realm":                resourceFmcLocalRealmObjects(),
+			// "fmc_local_realm":                resourceFmcLocalRealmObjects(),
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
@@ -157,7 +157,7 @@ func Provider() *schema.Provider {
 			"fmc_device_subinterfaces":       dataSourceFmcSubInterfaces(),
 			"fmc_port_group_objects":         dataSourceFmcPortGroupObjects(),
 			"fmc_device_cluster":             dataSourceFmcDeviceCluster(),
-			"fmc_local_realm":                dataSourceFmcLocalRealmObject(),
+			// "fmc_local_realm":                dataSourceFmcLocalRealmObject(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
