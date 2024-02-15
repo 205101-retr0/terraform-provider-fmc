@@ -61,7 +61,7 @@ func testAccCheckFmcAccessRuleConfigBasic(name string) string {
 	data "fmc_ips_policies" "ips_policy" {
 		name = "Connectivity Over Security"
 	}
-	resource "fmc_security_zone" "oustide" {
+	resource "fmc_security_zone" "outside" {
 		name            = "outside"
 		interface_mode  = "ROUTED"
 	}

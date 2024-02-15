@@ -71,7 +71,7 @@ func dataSourcePhysicalInterfaceRead(ctx context.Context, d *schema.ResourceData
 	var diags diag.Diagnostics
 	ifc, err := c.GetFmcPhysicalInterface(ctx, d.Get("device_id").(string), d.Get("name").(string))
 
-	log.Printf("ID=%s Name=%s IFName=%s Type=%s", ifc.ID, ifc.Name, ifc.Ifname, ifc.Type)
+	// log.Printf("ID=%s Name=%s IFName=%s Type=%s", ifc.ID, ifc.Name, ifc.Ifname, ifc.Type)
 	log.Printf("SecurityZone=%s", ifc.SecurityZone.ID)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
