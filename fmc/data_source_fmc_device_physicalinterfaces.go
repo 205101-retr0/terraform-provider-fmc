@@ -2,7 +2,6 @@ package fmc
 
 import (
 	"context"
-	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -72,7 +71,7 @@ func dataSourcePhysicalInterfaceRead(ctx context.Context, d *schema.ResourceData
 	ifc, err := c.GetFmcPhysicalInterface(ctx, d.Get("device_id").(string), d.Get("name").(string))
 
 	// log.Printf("ID=%s Name=%s IFName=%s Type=%s", ifc.ID, ifc.Name, ifc.Ifname, ifc.Type)
-	log.Printf("SecurityZone=%s", ifc.SecurityZone.ID)
+	// log.Printf("SecurityZone=%s", ifc.SecurityZone.ID)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
@@ -81,7 +80,7 @@ func dataSourcePhysicalInterfaceRead(ctx context.Context, d *schema.ResourceData
 		})
 		return diags
 	}
-	log.Printf("Description=%s", ifc.Name)
+	// log.Printf("Description=%s", ifc.Name)
 
 	d.SetId(ifc.ID)
 
